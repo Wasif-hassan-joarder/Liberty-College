@@ -16,6 +16,9 @@ conversation with the WordPress system itself.
       wp_enqueue_script() - this function is used for loading js file.
       But Js file load korte extra kicu argument er dorkar hoi - onno kono js file er upor dependencies asea kina, thakle - array('name'), nah thakle - Null
       then version number for the script - 1.0.1, last argument - WordPress asking us, do you want to load this file right before the closing body tag yes(true) or no(false).
+      
+      after_setup_theme - etah action hook. Etah Theme-এর features/setup configure করে.
+      add_theme_support(); - Theme-এ WordPress-এর নির্দিষ্ট built-in feature enable korea.
       */
 
 
@@ -31,5 +34,12 @@ conversation with the WordPress system itself.
    add_action('wp_enqueue_scripts', 'liberty_files');  // 'wp_enqueue_scripts' hocche WordPress er HOOK.
               
    // আমি এখানে function-টা execute করব না,যখন wp_enqueue_scripts Hook টি রান করবে, তখন liberty_files ফাংশনটি চালাবে, তাই শুধু এটির নাম দিব.
+  
+  
+  function liberty_feature() {
+    add_theme_support('title-tag'); // WordPress-কে site-এর <title> tag automatically add করার permission diea holo.
+  }
+
+   add_action('after_setup_theme', 'liberty_feature'); // Theme setup হওয়ার সময় WordPress-কে আমাদের theme-এর features(liberty_feature) চালাতে বলা হচ্ছে।
 
 ?>
