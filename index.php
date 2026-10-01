@@ -64,6 +64,25 @@ while(have_posts()){
 }
 
 */
+
+ /* *** kicu function ea amra echo korsi , kicu function likhle iee output show korse. REASON : jei function ea return use kora hoi shetah echo chara value dei nah,
+    And onnn function ea echo use kora asea,tai Call korle iee Output show korea
+
+  return - Value ফেরত dei. example: ami kaj shes korea report submit korsi, echo - Screen-এ value দেখায়. example: kaj shes korea report er result show. 
+  konta teh return use kora konta teh echo korah bojhar upai : get diea start holeh return use korah,example: get_the_title();
+  the diea start holeh echo use korah,example: The title(); Real example : 
+
+  function doubleNum($y){
+    echo $y * 2;
+  }
+  doubleNum(5);
+
+  function tripleNum($x){
+    return $x * 3;
+  }
+  echo tripleNum(3);
+ */
+
 ?>
 
 <div class="page-banner">

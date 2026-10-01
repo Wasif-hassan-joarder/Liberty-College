@@ -16,34 +16,48 @@ while(have_posts()){
     </div>
 
 
-    <!-- breadcrumb box tokon iee show korbe jokon kono sub/children page ea thakbeh.Etar jonno IF Statement er Lagbe.learning IF : 
-     
-    
+    <!-- breadcrumb box tokon iee show korbe jokon kono sub/children page ea thakbeh.etah ekta condition,Etar jonno IF Statement Lagbe. Learning IF : 
+
     -->
 
     <?php // if tokon iee kaj korbe jokon parenthesis er modhea condition true hobe.
+    /* if (2+2 == 4) {
+      echo "the best College.";
+     }  
+      
      echo get_the_ID();
      echo wp_get_post_parent_id();
-     
-     if (2+2 == 4) {
-      echo "the best College."; 
+     echo wp_get_post_parent_id(get_the_ID());
+
+     if (wp_get_post_parent_id(get_the_ID())) {
+      echo "I'm Child Page.";
+     }  */
     
-      /* The breadcrumb box will only show if the current page has a parent page.ei condition korte IF lagbeh.so, eita check er jonno dorkar porbe PAGE ID er.
-    evry page have a Unique numerical ID,ei ID editing time ea URL ea thakeh,also wp function diea dekha jai.
-    get_the_ID(); - ei function page ID show korea. 
-    
-    */
+    // The breadcrumb box will only show if the current page has a parent page.
+    $Parentpage = wp_get_post_parent_id(get_the_ID()) ;
 
-     }
-
-     ?>
-
-    <div class="container container--narrow page-section">
+    if ($Parentpage) { ?>
+         <div class="container container--narrow page-section">
       <div class="metabox metabox--position-up metabox--with-home-link">
         <p>
-          <a class="metabox__blog-home-link" href="#"><i class="fa fa-home" aria-hidden="true"></i> Back to About Us</a> <span class="metabox__main"><?php the_title();?></span>
+          <a class="metabox__blog-home-link" href="<?php echo get_permalink($Parentpage); ?>"><i class="fa fa-home" aria-hidden="true"></i> Back to <?php echo get_the_title($Parentpage); ?></a> <span class="metabox__main"><?php the_title();?></span>
         </p>
       </div>
+    <?php }
+      /* breadcrumb box er ei condition korte IF lagbeh.so, eita check er jonno dorkar porbe PAGE ID er.
+    evry page have a Unique numerical ID,ei ID editing time ea URL ea thakeh,also wp function diea dekha jai.
+    get_the_ID(); - ei function current page er ID show korea.
+    wp_get_post_parent_id(): - Current page/post-এর parent-এর ID show করে; *parent না থাকলে 0 return করে।*
+    wp_get_post_parent_id(get_the_ID()); - আমি এখন যে page/post-এ আছি, তার parent-এর ID আমাকে দাও।
+    0 means = False. so, if er condition jodi 0 hoi tahle if kaj korbe na.
+    get_the_title(); - current page/post er title return korea , but ei function er arrgument use korle oi page er title Show korai.
+    get_the_title($Parentpage) = get_the_title(wp_get_post_parent_id(get_the_ID())) - বর্তমান page-এর parent page-এর title বের করো। means  - get_the_ID() → 25 (Current page ID), wp_get_post_parent_id(25) → 10(Current page parent ID), get_the_title(10) → About Us (ID 10 page title) 
+    
+    get_permalink(); - current post/page-এর URL/permalink return করে,but ei function er arrgument use korle oi page er Url return korai.
+    get_permalink($Parentpage); = get_permalink(wp_get_post_parent_id(get_the_ID())); - বর্তমান page-এর parent page-এর URL/permalink বের করো। - same get_the-title($Parentpage) er breakdown er motoh.
+    */
+
+     ?>
 
       <!--
 
