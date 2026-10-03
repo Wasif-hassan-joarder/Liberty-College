@@ -20,7 +20,7 @@ while(have_posts()){
 
     -->
 
-    <?php // if tokon iee kaj korbe jokon parenthesis er modhea condition true hobe.
+    <?php // if tokon iee kaj korbe jokon parenthesis er modhea condition true hobe.false/0 holeh kaj korbe nah  
     /* if (2+2 == 4) {
       echo "the best College.";
      }  
@@ -31,7 +31,22 @@ while(have_posts()){
 
      if (wp_get_post_parent_id(get_the_ID())) {
       echo "I'm Child Page.";
-     }  */
+     }  
+
+    breadcrumb box er ei condition korte IF lagbeh.so, eita check er jonno dorkar porbe PAGE ID er.
+    evry page have a Unique numerical ID,ei ID editing time ea URL ea thakeh,also wp function diea dekha jai.
+    get_the_ID(); - ei function current page er ID show korea.
+    wp_get_post_parent_id(): - Current page/post-এর parent-এর ID show করে; *parent না থাকলে 0 return করে।*
+    wp_get_post_parent_id(get_the_ID()); - আমি এখন যে page/post-এ আছি, তার parent-এর ID আমাকে দাও।
+    if(0) means = False. so, if er condition jodi 0 hoi tahle if kaj korbe na.
+    -------------------------------
+    get_the_title(); - current page/post er title return korea , but ei function er arrgument use korle oi page er title Show korai.
+    get_the_title($Parentpage) = get_the_title(wp_get_post_parent_id(get_the_ID())) - বর্তমান page-এর parent page-এর title বের করো। means  - get_the_ID() → 25 (Current page ID), wp_get_post_parent_id(25) → 10(Current page parent ID), get_the_title(10) → About Us (ID 10 page title) 
+    get_the_title(0) → Current page/post-এর title return korea.
+
+    get_permalink(); - current post/page-এর URL/permalink return করে,but ei function er arrgument use korle oi page er Url return korai.
+    get_permalink($Parentpage); = get_permalink(wp_get_post_parent_id(get_the_ID())); - বর্তমান page-এর parent page-এর URL/permalink বের করো। - same get_the-title($Parentpage) er breakdown er motoh.
+    */
     
     // The breadcrumb box will only show if the current page has a parent page.
     $Parentpage = wp_get_post_parent_id(get_the_ID()) ;
@@ -43,33 +58,51 @@ while(have_posts()){
           <a class="metabox__blog-home-link" href="<?php echo get_permalink($Parentpage); ?>"><i class="fa fa-home" aria-hidden="true"></i> Back to <?php echo get_the_title($Parentpage); ?></a> <span class="metabox__main"><?php the_title();?></span>
         </p>
       </div>
+
     <?php }
-      /* breadcrumb box er ei condition korte IF lagbeh.so, eita check er jonno dorkar porbe PAGE ID er.
-    evry page have a Unique numerical ID,ei ID editing time ea URL ea thakeh,also wp function diea dekha jai.
-    get_the_ID(); - ei function current page er ID show korea.
-    wp_get_post_parent_id(): - Current page/post-এর parent-এর ID show করে; *parent না থাকলে 0 return করে।*
-    wp_get_post_parent_id(get_the_ID()); - আমি এখন যে page/post-এ আছি, তার parent-এর ID আমাকে দাও।
-    0 means = False. so, if er condition jodi 0 hoi tahle if kaj korbe na.
-    get_the_title(); - current page/post er title return korea , but ei function er arrgument use korle oi page er title Show korai.
-    get_the_title($Parentpage) = get_the_title(wp_get_post_parent_id(get_the_ID())) - বর্তমান page-এর parent page-এর title বের করো। means  - get_the_ID() → 25 (Current page ID), wp_get_post_parent_id(25) → 10(Current page parent ID), get_the_title(10) → About Us (ID 10 page title) 
-    
-    get_permalink(); - current post/page-এর URL/permalink return করে,but ei function er arrgument use korle oi page er Url return korai.
-    get_permalink($Parentpage); = get_permalink(wp_get_post_parent_id(get_the_ID())); - বর্তমান page-এর parent page-এর URL/permalink বের করো। - same get_the-title($Parentpage) er breakdown er motoh.
-    */
+     
 
      ?>
 
-      <!--
+      
 
       <div class="page-links">
-        <h2 class="page-links__title"><a href="#">About Us</a></h2>
+        <h2 class="page-links__title"><a href="<?php echo get_permalink($Parentpage); ?>"><?php echo get_the_title ($Parentpage); ?></a></h2>
         <ul class="min-list">
-          <li class="current_page_item"><a href="#">Our History</a></li>
-          <li><a href="#">Our Goals</a></li>
+          <?php 
+          /*
+          wp_list_pages(); - site -এর সব Page-কে তাদের title link করে automatically list আকারে দেখায়।
+           'title_li' - হলো wp_list_pages() function-এর একটি argument/key, যেটা page list-এর title/header কে বোঝায়.
+           'child_of' - eitar mane jei parent page ea aci tar under-e থাকা childpage show koro,So value lagbe.
+           -----------------------
+           Associative Array - etah diea number index er bodole meaningful (name)key diye value rakha hoy. - benefit: meaningful name er under ea value store.
+           $normal = array('cat', 'dog', 'bird'); - normal array.
+           $valueName = array('cat' => 'fish', dog => 'meat', 'bird' => 'insect'); - associative array 'key' => 'value'
+           
+           $valueName = array('cat' => 'fish', 'dog' => 'meat', 'bird' => 'insect');
+           echo $valueName['cat']; 
+           -----------------------
+           ekon amra chai je ei side menu bar show korbe Only parent & child page ea.onno kono page ea noi(means condition)
+           else - if er condition false/0 holeh else er kaj korbe.
+           $Parentpage - যে page/post-এ আছে, তার parent-এর ID দেই. - ekhane  parent page na thakle 0 dibe, 0 means false tokon else excute hobe.
+
+          */
+          if($Parentpage){
+            $FindChildPage = $Parentpage ; // current page er parent page er ID.
+          } else {
+            $FindChildPage = get_the_ID(0); // $FindChildPage = current page er Post ID.
+          }
+
+          wp_list_pages(array(
+            'title_li' => NULL,
+            'child_of' => $FindChildPage, // current page er Childpage gulah show koro.
+          ));
+          
+          ?>
         </ul>
       </div>
 
-       -->
+       
 
       <div class="generic-content">
         <?php the_content(); ?>
