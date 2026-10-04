@@ -23,7 +23,7 @@ $names = array('apple', 'orange', 'banana', 'mango', 'pineapple',);
 $total = 0;
 
 /* count hocche Php er emn ekta tool , jetah nijea iee count korea oi number ta use korea,
- jmn ekhane array er number count korea 5 boshai dibeh. [end comment]
+ jmn ekhane array er number count korea 5 boshai dibeh. 
 
 while ($total < count($names)) {
     echo "<li> Your favoruite fruit is $names[$total]</li>";
@@ -52,7 +52,7 @@ while ($count <= 10) {
 
 /* have_post() - Current WordPress query/result-এর মধ্যে কি কোনো post আছে কি না check করা?
    while ( have_posts() ) - যতক্ষণ post বাকি আছে, ততক্ষণ এই code-এর ভিতরের কাজ চালাও. 
-   the_post() - পরবর্তী post-এ চলে যায় এবং সেই post-কে current post হিসেবে সেট করে. [end comment]
+   the_post() - পরবর্তী post-এ চলে যায় এবং সেই post-কে current post হিসেবে সেট করে.
 
 
 while(have_posts()){
@@ -68,8 +68,8 @@ while(have_posts()){
  /* *** kicu function ea amra echo korsi , kicu function likhle iee output show korse. REASON : jei function ea return use kora hoi shetah echo chara value dei nah,
     And onnn function ea echo use kora asea,tai Call korle iee Output show korea
 
-  return - Value ফেরত dei. example: ami kaj shes korea report submit korsi, echo - Screen-এ value দেখায়. example: kaj shes korea report er result show. 
-  konta teh return use kora konta teh echo korah bojhar upai : get diea start holeh return use korah,example: get_the_title();
+  return - Value ফেরত dei but result show korea nah. example: ami kaj shes korea report submit korsi, echo - Screen-এ value দেখায়. example: kaj shes korea report er result show. 
+  konta teh return use kora konta teh echo korah bojhar upai - get diea start holeh return use korah,example: get_the_title();
   the diea start holeh echo use korah,example: The title(); Real example : 
 
   function doubleNum($y){

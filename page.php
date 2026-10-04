@@ -64,44 +64,64 @@ while(have_posts()){
 
      ?>
 
-      
-
+    <!-- Side menu show korbe oi page gulah teh jara parent & Children page.It's a condition so need If.
+      also here is 2 condition : parent page, child page . childpage finding er jonno $Parentpage variable asea, parent page bujhar variable make korah lagbeh.
+    -->
+    <?php 
+    /*
+    get_pages(array('child_of' => get_the_ID())); - Current page er child page gulah return korbe, child page na thakle empty array(0) return kore, tai if false hoy.
+    ei function use korar reason hocche eagulah return korea kono kicu show korbe na.eavabe Parent page find kora hoise.
+    or - or diea multiple condition add korah jai , jekono ekta true holeh iee if er statement run hobe.
+    */
+    $findParentArray = get_pages(array(
+      'child_of' => get_the_ID()
+    )); 
+    
+    if ($Parentpage or $findParentArray ) { ?>
+       
       <div class="page-links">
         <h2 class="page-links__title"><a href="<?php echo get_permalink($Parentpage); ?>"><?php echo get_the_title ($Parentpage); ?></a></h2>
         <ul class="min-list">
           <?php 
           /*
+          get_pages(); - Similar to wp_list_pages(). ** but get pages() return korea r wp_list_pages() output dei.
           wp_list_pages(); - site -এর সব Page-কে তাদের title link করে automatically list আকারে দেখায়।
-           'title_li' - হলো wp_list_pages() function-এর একটি argument/key, যেটা page list-এর title/header কে বোঝায়.
-           'child_of' - eitar mane jei parent page ea aci tar under-e থাকা childpage show koro,So value lagbe.
-           -----------------------
-           Associative Array - etah diea number index er bodole meaningful (name)key diye value rakha hoy. - benefit: meaningful name er under ea value store.
-           $normal = array('cat', 'dog', 'bird'); - normal array.
-           $valueName = array('cat' => 'fish', dog => 'meat', 'bird' => 'insect'); - associative array 'key' => 'value'
+          'title_li' - হলো wp_list_pages() function-এর একটি argument/key, যেটা page list-এর title/header কে বোঝায়.
+          'child_of' - eitar mane jei parent page ea aci tar under-e থাকা childpage show koro,So value lagbe.
+          -----------------------
+          *** Associative Array - etah diea number index er bodole meaningful (name)key diye value rakha hoy. - benefit: meaningful name er under ea value store.
+          $normal = array('cat', 'dog', 'bird'); - normal array.
+          $valueName = array('cat' => 'fish', dog => 'meat', 'bird' => 'insect'); - associative array 'key' => 'value'
            
-           $valueName = array('cat' => 'fish', 'dog' => 'meat', 'bird' => 'insect');
-           echo $valueName['cat']; 
-           -----------------------
-           ekon amra chai je ei side menu bar show korbe Only parent & child page ea.onno kono page ea noi(means condition)
-           else - if er condition false/0 holeh else er kaj korbe.
-           $Parentpage - যে page/post-এ আছে, তার parent-এর ID দেই. - ekhane  parent page na thakle 0 dibe, 0 means false tokon else excute hobe.
+          $valueName = array('cat' => 'fish', 'dog' => 'meat', 'bird' => 'insect');
+          echo $valueName['cat']; 
+          -----------------------
+          ekon amra chai je ei side menu bar show korbe Only parent & child page ea.onno kono page ea noi(means condition)
+          else - if er condition false/0 holeh else er kaj korbe.
+          $Parentpage - যে page/post-এ আছে, তার parent-এর ID দেয়. - ekhane  parent page na thakle 0 dibe, 0 means false tokon else excute hobe.
+
+          Childpage Order - By default, WordPress will use alphabetical ordering, but we can use our own custom ordering,
+          'sort_order' - কোন জিনিসের(field er) ভিত্তিতে Pages-গুলো সাজাবে,wp_list_pages()-এর একটি argument
+          'menu_order' - WordPress-এর Menu Order value অনুযায়ী সাজাবে,wp_list_pages()-এর একটি argument
 
           */
           if($Parentpage){
             $FindChildPage = $Parentpage ; // current page er parent page er ID.
           } else {
-            $FindChildPage = get_the_ID(0); // $FindChildPage = current page er Post ID.
+            $FindChildPage = get_the_ID(); // $FindChildPage = current page er Post ID.
           }
 
           wp_list_pages(array(
             'title_li' => NULL,
             'child_of' => $FindChildPage, // current page er Childpage gulah show koro.
+             'sort_column' => 'menu_order' // Page-গুলোকে তাদের Menu Order অনুযায়ী সাজায়.
           ));
           
           ?>
         </ul>
       </div>
-
+      
+      <?php } ?>
        
 
       <div class="generic-content">
