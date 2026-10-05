@@ -46,6 +46,8 @@ conversation with the WordPress system itself.
 
   function liberty_feature() {
     register_nav_menu('headerMenuLocation', 'Header Menu'); // Theme-e menu location register kore; 1st ta internal name for location, 2nd ta Dashboard-e dekhano name.
+    register_nav_menu('footerLocationOne', 'Footer Location One');
+    register_nav_menu('footerLocationTwo', 'Footer Location Two ');
     add_theme_support('title-tag'); // WordPress-কে site-এর <title> tag automatically add করার permission diea holo.
   }
 
